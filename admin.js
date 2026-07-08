@@ -4,7 +4,7 @@
 
 async function loadAppointments() {
 
-    const { data, error } = await supabase
+    const { data, error } = await window.db
         .from("appointments")
         .select("*")
         .order("created_at", { ascending: false });
@@ -103,7 +103,7 @@ alert("Records: " + data.length);
 
 async function changeStatus(id,status){
 
-const {error}=await supabase
+const {error}=await window.db
 
 .from("appointments")
 
@@ -133,7 +133,7 @@ async function deleteAppointment(id){
 
 if(!confirm("Delete Appointment?")) return;
 
-const {error}=await supabase
+const {error}=await window.db
 
 .from("appointments")
 
