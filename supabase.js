@@ -6,7 +6,7 @@
 const SUPABASE_URL = "https://gaymixxpsnllapithkab.supabase.co";
 
 // Paste your Anon Public Key here
-const SUPABASE_ANON_KEY = "sb_publishable__flRiY_ZGQg5VkbkmtsbSw_m9Z0dn5o";
+const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImdheW1peHhwc25sbGFwaXRoa2FiIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODM0Mzg1NzMsImV4cCI6MjA5OTAxNDU3M30._c9AQ6Wj7IQGNKTp_C3UP8AmlrkSOzfQgwIK5KSwC0E";
 
 // Initialize Supabase
 const supabase = window.supabase.createClient(
