@@ -17,7 +17,7 @@ form.addEventListener("submit", async (e) => {
         return;
     }
 
-    const { error } = await supabase
+    const { error } = await window.db
         .from("appointments")
         .insert([
             {
