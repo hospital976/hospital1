@@ -768,3 +768,158 @@ text-align:center;
 }
 
 }
+/* ==========================
+ADMIN DASHBOARD
+========================== */
+
+.dashboard{
+padding:100px 0;
+background:#f5f9ff;
+min-height:100vh;
+}
+
+.dashboard-header{
+margin-bottom:40px;
+}
+
+.dashboard-header h1{
+font-size:40px;
+color:#0A84FF;
+margin-bottom:10px;
+}
+
+.dashboard-header p{
+color:#666;
+}
+
+.dashboard-cards{
+display:grid;
+grid-template-columns:repeat(4,1fr);
+gap:25px;
+margin-bottom:40px;
+}
+
+.dash-card{
+background:#fff;
+padding:30px;
+border-radius:18px;
+text-align:center;
+box-shadow:0 10px 25px rgba(0,0,0,.08);
+transition:.3s;
+}
+
+.dash-card:hover{
+transform:translateY(-8px);
+}
+
+.dash-card h2{
+font-size:42px;
+color:#0A84FF;
+margin-bottom:10px;
+}
+
+.dash-card p{
+font-size:17px;
+color:#666;
+}
+
+.table-box{
+background:#fff;
+border-radius:20px;
+padding:25px;
+overflow-x:auto;
+box-shadow:0 10px 30px rgba(0,0,0,.08);
+}
+
+table{
+width:100%;
+border-collapse:collapse;
+}
+
+table thead{
+background:#0A84FF;
+color:#fff;
+}
+
+table th,
+table td{
+padding:16px;
+text-align:center;
+border-bottom:1px solid #eee;
+}
+
+.status{
+padding:8px 16px;
+border-radius:30px;
+font-size:14px;
+font-weight:600;
+}
+
+.pending{
+background:#FFF3CD;
+color:#856404;
+}
+
+.approved{
+background:#D4EDDA;
+color:#155724;
+}
+
+.rejected{
+background:#F8D7DA;
+color:#721C24;
+}
+
+.action-btn{
+padding:8px 16px;
+border:none;
+border-radius:8px;
+cursor:pointer;
+font-weight:600;
+margin:3px;
+}
+
+.approve-btn{
+background:#16C79A;
+color:#fff;
+}
+
+.reject-btn{
+background:#FF4D4F;
+color:#fff;
+}
+
+.delete-btn{
+background:#333;
+color:#fff;
+}
+
+.action-btn:hover{
+opacity:.9;
+}
+
+@media(max-width:992px){
+
+.dashboard-cards{
+grid-template-columns:repeat(2,1fr);
+}
+
+}
+
+@media(max-width:600px){
+
+.dashboard-cards{
+grid-template-columns:1fr;
+}
+
+.dashboard-header h1{
+font-size:30px;
+}
+
+table th,
+table td{
+font-size:14px;
+padding:10px;
+}
+
+}
