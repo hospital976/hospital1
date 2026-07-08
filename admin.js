@@ -142,3 +142,87 @@ document.querySelectorAll(".dash-card h2")[2].innerHTML=data.filter(x=>x.status=
 document.querySelectorAll(".dash-card h2")[3].innerHTML=data.filter(x=>x.status=="Rejected").length;
 
 }
+// ==========================
+// APPROVE APPOINTMENT
+// ==========================
+
+async function approve(id){
+
+const { error } = await supabase
+.from("appointments")
+.update({
+status:"Approved"
+})
+.eq("id",id);
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+loadAppointments();
+
+}
+
+// ==========================
+// REJECT APPOINTMENT
+// ==========================
+
+async function reject(id){
+
+const { error } = await supabase
+.from("appointments")
+.update({
+status:"Rejected"
+})
+.eq("id",id);
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+loadAppointments();
+
+}
+
+// ==========================
+// DELETE APPOINTMENT
+// ==========================
+
+async function removeAppointment(id){
+
+if(!confirm("Delete this appointment?")) return;
+
+const { error } = await supabase
+.from("appointments")
+.delete()
+.eq("id",id);
+
+if(error){
+
+alert(error.message);
+
+return;
+
+}
+
+loadAppointments();
+
+}
+
+// ==========================
+// AUTO REFRESH
+// ==========================
+
+setInterval(()=>{
+
+loadAppointments();
+
+},5000);
