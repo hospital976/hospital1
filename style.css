@@ -923,3 +923,30 @@ padding:10px;
 }
 
 }
+.search-box{
+
+margin:30px 0;
+
+}
+
+.search-box input{
+
+width:100%;
+
+padding:16px;
+
+font-size:17px;
+
+border:2px solid #ddd;
+
+border-radius:12px;
+
+outline:none;
+
+}
+
+.search-box input:focus{
+
+border-color:#0A84FF;
+
+}
