@@ -4,95 +4,86 @@
 
 async function loadAppointments() {
 
+    const table = document.getElementById("appointmentTable");
+
     const { data, error } = await window.db
         .from("appointments")
         .select("*")
         .order("created_at", { ascending: false });
 
-  if (error) {
-    alert(error.message);
-    console.error(error);
-    return;
-}
-
-alert("Records: " + data.length);
-
-    const table = document.getElementById("appointmentTable");
+    if (error) {
+        console.error(error);
+        table.innerHTML = `
+        <tr>
+            <td colspan="7">${error.message}</td>
+        </tr>`;
+        return;
+    }
 
     if (!data || data.length === 0) {
-
         table.innerHTML = `
         <tr>
             <td colspan="7">No Appointments Found</td>
         </tr>`;
-
         return;
     }
 
     table.innerHTML = "";
 
+    let total = data.length;
     let pending = 0;
     let approved = 0;
     let rejected = 0;
 
     data.forEach(item => {
 
-        if(item.status==="Pending") pending++;
-        if(item.status==="Approved") approved++;
-        if(item.status==="Rejected") rejected++;
+        if (item.status === "Pending") pending++;
+        if (item.status === "Approved") approved++;
+        if (item.status === "Rejected") rejected++;
 
         table.innerHTML += `
         <tr>
 
-        <td>${item.full_name}</td>
+            <td>${item.full_name}</td>
 
-        <td>${item.phone}</td>
+            <td>${item.phone}</td>
 
-        <td>${item.doctor}</td>
+            <td>${item.doctor}</td>
 
-        <td>${item.appointment_date}</td>
+            <td>${item.appointment_date}</td>
 
-        <td>${item.appointment_time}</td>
+            <td>${item.appointment_time}</td>
 
-        <td>
+            <td>
+                <span class="status ${item.status.toLowerCase()}">
+                    ${item.status}
+                </span>
+            </td>
 
-        <span class="status ${item.status.toLowerCase()}">
+            <td>
 
-        ${item.status}
+                <button class="action-btn approve-btn"
+                onclick="changeStatus(${item.id},'Approved')">
+                Approve
+                </button>
 
-        </span>
+                <button class="action-btn reject-btn"
+                onclick="changeStatus(${item.id},'Rejected')">
+                Reject
+                </button>
 
-        </td>
+                <button class="action-btn delete-btn"
+                onclick="deleteAppointment(${item.id})">
+                Delete
+                </button>
 
-        <td>
+            </td>
 
-        <button class="action-btn approve-btn"
-        onclick="changeStatus(${item.id},'Approved')">
-
-        Approve
-
-        </button>
-
-        <button class="action-btn reject-btn"
-        onclick="changeStatus(${item.id},'Rejected')">
-
-        Reject
-
-        </button>
-
-        <button class="action-btn delete-btn"
-        onclick="deleteAppointment(${item.id})">
-
-        Delete
-
-        </button>
-
-        </td>
-
-        </tr>`;
+        </tr>
+        `;
     });
 
-    document.querySelectorAll(".dash-card h2")[0].innerText = data.length;
+    document.querySelectorAll(".dash-card h2")[0].innerText = total;
     document.querySelectorAll(".dash-card h2")[1].innerText = pending;
     document.querySelectorAll(".dash-card h2")[2].innerText = approved;
     document.querySelectorAll(".dash-card h2")[3].innerText = rejected;
@@ -100,71 +91,64 @@ alert("Records: " + data.length);
 }
 
 // ==============================
+// CHANGE STATUS
+// ==============================
 
-async function changeStatus(id,status){
+async function changeStatus(id, status) {
 
-const {error}=await window.db
+    const { error } = await window.db
+        .from("appointments")
+        .update({
+            status: status
+        })
+        .eq("id", id);
 
-.from("appointments")
+    if (error) {
+        alert(error.message);
+        return;
+    }
 
-.update({
-
-status:status
-
-})
-
-.eq("id",id);
-
-if(error){
-
-alert(error.message);
-
-return;
-
+    loadAppointments();
 }
 
-loadAppointments();
+// ==============================
+// DELETE
+// ==============================
+
+async function deleteAppointment(id) {
+
+    if (!confirm("Delete Appointment?")) return;
+
+    const { error } = await window.db
+        .from("appointments")
+        .delete()
+        .eq("id", id);
+
+    if (error) {
+        alert(error.message);
+        return;
+    }
+
+    loadAppointments();
 
 }
 
 // ==============================
+// LOGOUT
+// ==============================
 
-async function deleteAppointment(id){
+function logout() {
 
-if(!confirm("Delete Appointment?")) return;
+    localStorage.removeItem("adminLogin");
 
-const {error}=await window.db
-
-.from("appointments")
-
-.delete()
-
-.eq("id",id);
-
-if(error){
-
-alert(error.message);
-
-return;
-
-}
-
-loadAppointments();
+    window.location.href = "login.html";
 
 }
 
 // ==============================
-
-function logout(){
-
-localStorage.removeItem("adminLogin");
-
-window.location.href="login.html";
-
-}
-
+// START
 // ==============================
 
 loadAppointments();
 
-setInterval(loadAppointments,5000);
+setInterval(loadAppointments, 5000);
