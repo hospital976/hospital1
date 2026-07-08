@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+<meta charset="UTF-8">
+
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Book Appointment | CarePlus Hospital</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="container nav">
+
+<div class="logo">
+
+<i class="fa-solid fa-heart-pulse"></i>
+
+<h2>CarePlus</h2>
+
+</div>
+
+<nav>
+
+<a href="index.html">Home</a>
+
+<a href="index.html#services">Services</a>
+
+<a href="index.html#doctors">Doctors</a>
+
+<a href="index.html#contact">Contact</a>
+
+</nav>
+
+</div>
+
+</header>
+
+<section class="appointment-page">
+
+<div class="container">
+
+<div class="appointment-card">
+
+<div class="appointment-left">
+
+<h4>BOOK APPOINTMENT</h4>
+
+<h2>Schedule Your Visit</h2>
+
+<p>
+
+Fill in your details and our team will contact you shortly to confirm your appointment.
+
+</p>
+
+<ul>
+
+<li><i class="fa-solid fa-circle-check"></i> Expert Doctors</li>
+
+<li><i class="fa-solid fa-circle-check"></i> Online Booking</li>
+
+<li><i class="fa-solid fa-circle-check"></i> Instant Confirmation</li>
+
+<li><i class="fa-solid fa-circle-check"></i> 24×7 Support</li>
+
+</ul>
+
+</div>
+
+<div class="appointment-right">
+
+<form id="appointmentForm">
+
+<input
+type="text"
+id="name"
+placeholder="Full Name"
+required>
+
+<input
+type="email"
+id="email"
+placeholder="Email"
+required>
+
+<input
+type="tel"
+id="phone"
+placeholder="Phone Number"
+required>
+
+<select id="doctor">
+
+<option value="">Select Doctor</option>
+
+<option>Cardiologist</option>
+
+<option>Eye Specialist</option>
+
+<option>Dentist</option>
+
+<option>Neurologist</option>
+
+<option>General Physician</option>
+
+</select>
+
+<input
+type="date"
+id="date"
+required>
+
+<input
+type="time"
+id="time"
+required>
+
+<textarea
+id="problem"
+placeholder="Describe your problem"
+rows="5"></textarea>
+
+<button
+type="submit"
+class="appointment-btn">
+
+Book Appointment
+
+</button>
+
+</form>
+
+</div>
+
+</div>
+
+</div>
+
+</section>
+
+<script src="https://unpkg.com/@supabase/supabase-js@2"></script>
+
+<script src="supabase.js"></script>
+
+<script src="script.js"></script>
+
+</body>
+
+</html>
