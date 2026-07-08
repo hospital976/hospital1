@@ -1,4 +1,17 @@
 let appointments = [];
+loadAppointments() 
+if (error) {
+    console.error(error);
+    table.innerHTML = `
+    <tr>
+        <td colspan="7">${error.message}</td>
+    </tr>`;
+    return;
+}
+
+appointments = data;
+
+if (!data || data.length === 0) {
 // ==============================
 // CAREPLUS ADMIN DASHBOARD
 // ==============================
