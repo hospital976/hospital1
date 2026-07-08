@@ -1,3 +1,4 @@
+alert("Script Loaded");
 const form = document.getElementById("appointmentForm");
 
 form.addEventListener("submit", async (e) => {
