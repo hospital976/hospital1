@@ -34,7 +34,7 @@ status:"Pending"
 
 };
 
-const { error } = await supabase
+const { error } = await window.db
 .from("appointments")
 .insert([appointment]);
 
