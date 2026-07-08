@@ -226,3 +226,11 @@ setInterval(()=>{
 loadAppointments();
 
 },5000);
+
+function logout(){
+
+localStorage.removeItem("adminLogin");
+
+window.location.href="login.html";
+
+}
