@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Admin Dashboard | CarePlus Hospital</title>
+
+<link rel="stylesheet" href="style.css">
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+<link rel="stylesheet"
+href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css">
+
+</head>
+
+<body>
+
+<header>
+
+<div class="container nav">
+
+<div class="logo">
+
+<i class="fa-solid fa-heart-pulse"></i>
+
+<h2>CarePlus Admin</h2>
+
+</div>
+
+<a href="index.html" class="btn">Home</a>
+
+</div>
+
+</header>
+
+<section class="dashboard">
+
+<div class="container">
+
+<div class="dashboard-header">
+
+<h1>Admin Dashboard</h1>
+
+<p>Manage appointments and patients.</p>
+
+</div>
+
+<div class="dashboard-cards">
+
+<div class="dash-card">
+
+<h2>0</h2>
+
+<p>Total Appointments</p>
+
+</div>
+
+<div class="dash-card">
+
+<h2>0</h2>
+
+<p>Pending</p>
+
+</div>
+
+<div class="dash-card">
+
+<h2>0</h2>
+
+<p>Approved</p>
+
+</div>
+
+<div class="dash-card">
+
+<h2>0</h2>
+
+<p>Rejected</p>
+
+</div>
+
+</div>
+
+<div class="table-box">
+
+<table>
+
+<thead>
+
+<tr>
+
+<th>Name</th>
+
+<th>Phone</th>
+
+<th>Doctor</th>
+
+<th>Date</th>
+
+<th>Time</th>
+
+<th>Status</th>
+
+<th>Action</th>
+
+</tr>
+
+</thead>
+
+<tbody id="appointmentTable">
+
+<tr>
+
+<td colspan="7">
+
+No appointments found.
+
+</td>
+
+</tr>
+
+</tbody>
+
+</table>
+
+</div>
+
+</div>
+
+</section>
+
+<script src="admin.js"></script>
+
+</body>
+
+</html>
