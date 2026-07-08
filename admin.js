@@ -9,10 +9,13 @@ async function loadAppointments() {
         .select("*")
         .order("created_at", { ascending: false });
 
-    if (error) {
-        console.error(error);
-        return;
-    }
+  if (error) {
+    alert(error.message);
+    console.error(error);
+    return;
+}
+
+alert("Records: " + data.length);
 
     const table = document.getElementById("appointmentTable");
 
