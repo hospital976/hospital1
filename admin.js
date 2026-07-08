@@ -1,0 +1,144 @@
+// ==========================
+// CAREPLUS ADMIN PANEL
+// ==========================
+
+// Supabase Config
+
+const supabase = window.supabase.createClient(
+    "https://YOUR_PROJECT.supabase.co",
+    "YOUR_ANON_KEY"
+);
+
+// HTML Elements
+
+const table = document.getElementById("appointmentTable");
+
+// Load Data
+
+loadAppointments();
+
+async function loadAppointments(){
+
+const { data, error } = await supabase
+
+.from("appointments")
+
+.select("*")
+
+.order("created_at",{ascending:false});
+
+if(error){
+
+console.log(error);
+
+return;
+
+}
+
+showAppointments(data);
+
+updateCards(data);
+
+}
+
+// Table
+
+function showAppointments(data){
+
+if(data.length==0){
+
+table.innerHTML=`
+
+<tr>
+
+<td colspan="7">
+
+No Appointment Found
+
+</td>
+
+</tr>
+
+`;
+
+return;
+
+}
+
+table.innerHTML="";
+
+data.forEach(item=>{
+
+table.innerHTML+=`
+
+<tr>
+
+<td>${item.full_name}</td>
+
+<td>${item.phone}</td>
+
+<td>${item.doctor}</td>
+
+<td>${item.appointment_date}</td>
+
+<td>${item.appointment_time}</td>
+
+<td>
+
+<span class="status ${item.status.toLowerCase()}">
+
+${item.status}
+
+</span>
+
+</td>
+
+<td>
+
+<button
+class="action-btn approve-btn"
+onclick="approve('${item.id}')">
+
+Approve
+
+</button>
+
+<button
+class="action-btn reject-btn"
+onclick="reject('${item.id}')">
+
+Reject
+
+</button>
+
+<button
+class="action-btn delete-btn"
+onclick="removeAppointment('${item.id}')">
+
+Delete
+
+</button>
+
+</td>
+
+</tr>
+
+`;
+
+});
+
+}
+
+// Dashboard Cards
+
+function updateCards(data){
+
+document.querySelectorAll(".dash-card h2")[0].innerHTML=data.length;
+
+document.querySelectorAll(".dash-card h2")[1].innerHTML=data.filter(x=>x.status=="Pending").length;
+
+document.querySelectorAll(".dash-card h2")[2].innerHTML=data.filter(x=>x.status=="Approved").length;
+
+document.querySelectorAll(".dash-card h2")[3].innerHTML=data.filter(x=>x.status=="Rejected").length;
+
+}
