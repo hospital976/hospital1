@@ -1,7 +1,6 @@
-// =========================================
-// CAREPLUS ADMIN DASHBOARD
-// PART 1
-// =========================================
+// ===================================
+// CAREPLUS ADMIN PANEL
+// ===================================
 
 let appointments = [];
 
@@ -20,54 +19,61 @@ async function loadAppointments() {
         .order("created_at", { ascending: false });
 
     if (error) {
-        console.error(error);
 
         table.innerHTML = `
         <tr>
             <td colspan="7">${error.message}</td>
         </tr>`;
 
+        console.error(error);
+
         return;
+
     }
 
     appointments = data || [];
 
     updateDashboard();
 
-    renderAppointments();
+    renderTable(appointments);
 
 }
 
-// =========================================
+// ===================================
 // DASHBOARD
-// =========================================
+// ===================================
 
 function updateDashboard() {
 
-    document.querySelectorAll(".dash-card h2")[0].innerText = appointments.length;
+    const total = appointments.length;
 
-    document.querySelectorAll(".dash-card h2")[1].innerText =
-        appointments.filter(x => x.status === "Pending").length;
+    const pending = appointments.filter(a => a.status === "Pending").length;
 
-    document.querySelectorAll(".dash-card h2")[2].innerText =
-        appointments.filter(x => x.status === "Approved").length;
+    const approved = appointments.filter(a => a.status === "Approved").length;
 
-    document.querySelectorAll(".dash-card h2")[3].innerText =
-        appointments.filter(x => x.status === "Rejected").length;
+    const rejected = appointments.filter(a => a.status === "Rejected").length;
+
+    document.querySelectorAll(".dash-card h2")[0].innerText = total;
+
+    document.querySelectorAll(".dash-card h2")[1].innerText = pending;
+
+    document.querySelectorAll(".dash-card h2")[2].innerText = approved;
+
+    document.querySelectorAll(".dash-card h2")[3].innerText = rejected;
 
 }
 
-// =========================================
+// ===================================
 // TABLE
-// =========================================
+// ===================================
 
-function renderAppointments() {
+function renderTable(data) {
 
     const table = document.getElementById("appointmentTable");
 
     table.innerHTML = "";
 
-    if (appointments.length === 0) {
+    if (data.length === 0) {
 
         table.innerHTML = `
         <tr>
@@ -78,7 +84,7 @@ function renderAppointments() {
 
     }
 
-    appointments.forEach(item => {
+    data.forEach(item => {
 
         table.innerHTML += `
 
@@ -139,12 +145,9 @@ Delete
     });
 
 }
-// =========================================
-// CAREPLUS ADMIN DASHBOARD
-// PART 2
-// =========================================
-
+// ===================================
 // APPROVE / REJECT
+// ===================================
 
 async function changeStatus(id, status) {
 
@@ -164,11 +167,15 @@ async function changeStatus(id, status) {
 
 }
 
+// ===================================
 // DELETE
+// ===================================
 
 async function deleteAppointment(id) {
 
-    if (!confirm("Delete this appointment?")) return;
+    const ok = confirm("Delete this appointment?");
+
+    if (!ok) return;
 
     const { error } = await window.db
         .from("appointments")
@@ -184,22 +191,14 @@ async function deleteAppointment(id) {
 
 }
 
+// ===================================
 // LOGOUT
+// ===================================
 
 function logout() {
 
     localStorage.removeItem("adminLogin");
 
-    window.location.href = "login.html";
+    location.href = "login.html";
 
 }
-
-// START
-
-loadAppointments();
-
-setInterval(function () {
-
-    loadAppointments();
-
-}, 5000);
