@@ -1,6 +1,6 @@
-// ==============================
-// CAREPLUS ADMIN DASHBOARD
-// ==============================
+// ===================================
+// CAREPLUS ADMIN PANEL
+// ===================================
 
 let appointments = [];
 
@@ -8,42 +8,72 @@ async function loadAppointments() {
 
     const table = document.getElementById("appointmentTable");
 
+    table.innerHTML = `
+    <tr>
+        <td colspan="7">Loading...</td>
+    </tr>`;
+
     const { data, error } = await window.db
         .from("appointments")
         .select("*")
         .order("created_at", { ascending: false });
 
     if (error) {
-        console.error(error);
+
         table.innerHTML = `
         <tr>
             <td colspan="7">${error.message}</td>
         </tr>`;
+
+        console.error(error);
+
         return;
+
     }
 
     appointments = data || [];
 
-    document.querySelectorAll(".dash-card h2")[0].innerText = appointments.length;
-    document.querySelectorAll(".dash-card h2")[1].innerText =
-        appointments.filter(x => x.status === "Pending").length;
-    document.querySelectorAll(".dash-card h2")[2].innerText =
-        appointments.filter(x => x.status === "Approved").length;
-    document.querySelectorAll(".dash-card h2")[3].innerText =
-        appointments.filter(x => x.status === "Rejected").length;
+    updateDashboard();
 
     renderTable(appointments);
+
 }
 
-// ==============================
-// TABLE RENDER
-// ==============================
+// ===================================
+// DASHBOARD
+// ===================================
+
+function updateDashboard() {
+
+    const total = appointments.length;
+
+    const pending = appointments.filter(a => a.status === "Pending").length;
+
+    const approved = appointments.filter(a => a.status === "Approved").length;
+
+    const rejected = appointments.filter(a => a.status === "Rejected").length;
+
+    document.querySelectorAll(".dash-card h2")[0].innerText = total;
+
+    document.querySelectorAll(".dash-card h2")[1].innerText = pending;
+
+    document.querySelectorAll(".dash-card h2")[2].innerText = approved;
+
+    document.querySelectorAll(".dash-card h2")[3].innerText = rejected;
+
+}
+
+// ===================================
+// TABLE
+// ===================================
 
 function renderTable(data) {
 
     const table = document.getElementById("appointmentTable");
 
-    if (!data || data.length === 0) {
+    table.innerHTML = "";
+
+    if (data.length === 0) {
 
         table.innerHTML = `
         <tr>
@@ -51,96 +81,73 @@ function renderTable(data) {
         </tr>`;
 
         return;
-    }
 
-    table.innerHTML = "";
+    }
 
     data.forEach(item => {
 
         table.innerHTML += `
-        <tr>
 
-            <td>${item.full_name}</td>
+<tr>
 
-            <td>${item.phone}</td>
+<td>${item.full_name}</td>
 
-            <td>${item.doctor}</td>
+<td>${item.phone}</td>
 
-            <td>${item.appointment_date}</td>
+<td>${item.doctor}</td>
 
-            <td>${item.appointment_time}</td>
+<td>${item.appointment_date}</td>
 
-            <td>
+<td>${item.appointment_time}</td>
 
-                <span class="status ${item.status.toLowerCase()}">
+<td>
 
-                ${item.status}
+<span class="status ${item.status.toLowerCase()}">
 
-                </span>
+${item.status}
 
-            </td>
+</span>
 
-            <td>
+</td>
 
-                <button class="action-btn approve-btn"
-                onclick="changeStatus(${item.id},'Approved')">
+<td>
 
-                Approve
+<button class="action-btn approve-btn"
 
-                </button>
+onclick="changeStatus(${item.id},'Approved')">
 
-                <button class="action-btn reject-btn"
-                onclick="changeStatus(${item.id},'Rejected')">
+Approve
 
-                Reject
+</button>
 
-                </button>
+<button class="action-btn reject-btn"
 
-                <button class="action-btn delete-btn"
-                onclick="deleteAppointment(${item.id})">
+onclick="changeStatus(${item.id},'Rejected')">
 
-                Delete
+Reject
 
-                </button>
+</button>
 
-            </td>
+<button class="action-btn delete-btn"
 
-        </tr>
-        `;
+onclick="deleteAppointment(${item.id})">
 
-    });
+Delete
 
-}
+</button>
 
-// ==============================
-// SEARCH
-// ==============================
+</td>
 
-const searchInput = document.getElementById("searchInput");
+</tr>
 
-if (searchInput) {
-
-    searchInput.addEventListener("keyup", function () {
-
-        const value = this.value.toLowerCase().trim();
-
-        const filtered = appointments.filter(item => {
-
-            return (
-                item.full_name.toLowerCase().includes(value) ||
-                item.phone.toLowerCase().includes(value)
-            );
-
-        });
-
-        renderTable(filtered);
+`;
 
     });
 
 }
-// ==============================
+// ===================================
 // APPROVE / REJECT
-// ==============================
+// ===================================
 
 async function changeStatus(id, status) {
 
@@ -160,15 +167,15 @@ async function changeStatus(id, status) {
 
 }
 
-// ==============================
-// DELETE APPOINTMENT
-// ==============================
+// ===================================
+// DELETE
+// ===================================
 
 async function deleteAppointment(id) {
 
-    if (!confirm("Are you sure you want to delete this appointment?")) {
-        return;
-    }
+    const ok = confirm("Delete this appointment?");
+
+    if (!ok) return;
 
     const { error } = await window.db
         .from("appointments")
@@ -184,26 +191,14 @@ async function deleteAppointment(id) {
 
 }
 
-// ==============================
+// ===================================
 // LOGOUT
-// ==============================
+// ===================================
 
 function logout() {
 
     localStorage.removeItem("adminLogin");
 
-    window.location.href = "login.html";
+    location.href = "login.html";
 
 }
-
-// ==============================
-// AUTO REFRESH
-// ==============================
-
-loadAppointments();
-
-setInterval(() => {
-
-    loadAppointments();
-
-}, 5000);
