@@ -950,3 +950,17 @@ outline:none;
 border-color:#0A84FF;
 
 }
+.admin-btn{
+    background:#198754;
+    color:#fff;
+    padding:12px 22px;
+    border-radius:8px;
+    text-decoration:none;
+    margin-right:10px;
+    font-weight:600;
+    transition:.3s;
+}
+
+.admin-btn:hover{
+    background:#146c43;
+}
