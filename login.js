@@ -37,8 +37,8 @@ form.addEventListener("submit", (e) => {
     setTimeout(() => {
 
         if (
-            username.value.trim() === "admin" &&
-            password.value.trim() === "123456"
+            username.value.trim() === "care" &&
+            password.value.trim() === "care1234"
         ) {
 
             localStorage.setItem("adminLogin", "true");
