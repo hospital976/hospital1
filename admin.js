@@ -202,3 +202,17 @@ function logout() {
     location.href = "login.html";
 
 }
+// ===================================
+// START
+// ===================================
+
+document.addEventListener("DOMContentLoaded", () => {
+
+    if (localStorage.getItem("adminLogin") !== "true") {
+        location.href = "login.html";
+        return;
+    }
+
+    loadAppointments();
+
+});
