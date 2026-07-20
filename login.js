@@ -1,25 +1,74 @@
 const form = document.getElementById("loginForm");
 
-form.addEventListener("submit",(e)=>{
+const username = document.getElementById("username");
+const password = document.getElementById("password");
 
-e.preventDefault();
+const loginBtn = document.getElementById("loginBtn");
+const btnText = document.getElementById("btnText");
 
-const username=document.getElementById("username").value;
+const errorBox = document.getElementById("loginError");
 
-const password=document.getElementById("password").value;
+const togglePassword = document.getElementById("togglePassword");
 
-// Temporary Login
+// Show / Hide Password
+togglePassword.addEventListener("click", () => {
 
-if(username==="admin" && password==="123456"){
+    if (password.type === "password") {
+        password.type = "text";
+        togglePassword.innerHTML = '<i class="fa-solid fa-eye-slash"></i>';
+    } else {
+        password.type = "password";
+        togglePassword.innerHTML = '<i class="fa-solid fa-eye"></i>';
+    }
 
-localStorage.setItem("adminLogin","true");
+});
 
-window.location.href="admin.html";
+// Login
+form.addEventListener("submit", (e) => {
 
-}else{
+    e.preventDefault();
 
-alert("Invalid Username or Password");
+    errorBox.style.display = "none";
 
-}
+    loginBtn.disabled = true;
+
+    btnText.innerHTML = '<i class="fa-solid fa-spinner fa-spin"></i> Signing In...';
+
+    setTimeout(() => {
+
+        if (
+            username.value.trim() === "admin" &&
+            password.value.trim() === "123456"
+        ) {
+
+            localStorage.setItem("adminLogin", "true");
+
+            btnText.innerHTML =
+                '<i class="fa-solid fa-circle-check"></i> Success';
+
+            setTimeout(() => {
+
+                window.location.href = "admin.html";
+
+            }, 600);
+
+        } else {
+
+            loginBtn.disabled = false;
+
+            btnText.innerHTML = "Login";
+
+            errorBox.style.display = "block";
+
+            errorBox.innerHTML =
+                '<i class="fa-solid fa-circle-xmark"></i> Invalid Username or Password';
+
+            password.value = "";
+
+            password.focus();
+
+        }
+
+    }, 1200);
 
 });
