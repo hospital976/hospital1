@@ -58,3 +58,29 @@ form.reset();
 });
 
 }
+// ================================
+// MOBILE MENU
+// ================================
+
+const menuToggle = document.getElementById("menu-toggle");
+const nav = document.querySelector("nav");
+
+if (menuToggle && nav) {
+
+    menuToggle.addEventListener("click", () => {
+
+        nav.classList.toggle("active");
+
+        const icon = menuToggle.querySelector("i");
+
+        if (nav.classList.contains("active")) {
+            icon.classList.remove("fa-bars");
+            icon.classList.add("fa-xmark");
+        } else {
+            icon.classList.remove("fa-xmark");
+            icon.classList.add("fa-bars");
+        }
+
+    });
+
+}
